@@ -16,7 +16,7 @@ class App extends React.Component {
     fetch("https://api.koala.io/marketing/v1/device-configurations/alias/web-config", {
       method: 'GET',
       headers: {
-        'X-Organization-Id': 1,
+        'X-Organization-Id': '1',
       }
     })
       .then(res => res.json())
