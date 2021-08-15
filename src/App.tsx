@@ -10,29 +10,29 @@ interface StateProps {
 
 class App extends React.Component {
   state: StateProps = {
-    theme: null,
+  	theme: null,
   }
   componentDidMount() {
-    fetch("https://api.koala.io/marketing/v1/device-configurations/alias/web-config", {
-      method: 'GET',
-      headers: {
-        'X-Organization-Id': '1',
-      }
-    })
-      .then(res => res.json())
-      .then(
-        (result) => this.setState({ theme: result }),
-        (error) => console.log(error))
+  	fetch('https://api.koala.io/marketing/v1/device-configurations/alias/web-config', {
+  		method: 'GET',
+  		headers: {
+  			'X-Organization-Id': '1',
+  		}
+  	})
+  		.then(res => res.json())
+  		.then(
+  			(result) => this.setState({ theme: result }),
+  			(error) => console.log(error));
   }
   render() {
-    const data = this.state.theme && this.state.theme.data && this.state.theme.data.data;
-    return (
-      this.state.theme && (
-        <ThemeProvider theme={data}>
-          <Countdown />
-        </ThemeProvider>
-      )
-    )
+  	const data = this.state.theme && this.state.theme.data && this.state.theme.data.data;
+  	return (
+  		this.state.theme && (
+  			<ThemeProvider theme={data}>
+  				<Countdown />
+  			</ThemeProvider>
+  		)
+  	);
   }
 }
 
