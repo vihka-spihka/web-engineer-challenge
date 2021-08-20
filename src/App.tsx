@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { Countdown } from './components/countdown';
+import helpers from './helpers';
 
 interface IState {
   theme: Theme | null;
@@ -14,17 +15,14 @@ class App extends React.Component<unknown, IState> {
   	countdown: null,
   }
 
-  componentDidMount() {
-  	fetch('https://api.koala.io/marketing/v1/device-configurations/alias/web-config', {
-  		method: 'GET',
-  		headers: {
-  			'X-Organization-Id': '1',
-  		}
-  	})
-  		.then(res => res.json())
+  componentDidMount(): void {
+  	helpers.fetchData(
+  		'https://api.koala.io/marketing/v1/device-configurations/alias/web-config',
+  		'GET',
+  		{'X-Organization-Id': '1'}
+  	)
   		.then(result => this.setState({ theme: result.data }))
   		.catch(error => console.log(error.message));
-
   }
 
   render() {

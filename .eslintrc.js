@@ -11,7 +11,8 @@ module.exports = {
 		'semi': ['warn', 'always'],
 		'eol-last': ['warn', 'always'],
 		'spaced-comment': ['warn', 'always', { 'markers': ['/'] }],
-		'prefer-const': 'warn'
+		'prefer-const': 'warn',
+		'import/no-anonymous-default-export': [2, {"allowObject": true}]
 	},
 	'overrides': [
 		{

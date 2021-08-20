@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App component renders correctly when countdown is in progress 1`] = `
+<Component
+  theme={
+    Object {
+      "global": Object {
+        "body_color": "green",
+      },
+    }
+  }
+>
+  <h1>
+    Countdown Clock
+  </h1>
+  <img
+    alt="Company logo"
+    src="koala-logo.png"
+  />
+  <div>
+    Seconds left: 
+    10
+  </div>
+</Component>
+`;
+
+exports[`App component renders correctly when theme provided 1`] = `
+<Component
+  theme={
+    Object {
+      "global": Object {
+        "body_color": "green",
+      },
+    }
+  }
+>
+  <h1>
+    Countdown Clock
+  </h1>
+  <img
+    alt="Company logo"
+    src="koala-logo.png"
+  />
+  <Countdown
+    setCountdown={[Function]}
+  />
+</Component>
+`;
+
+exports[`App component renders nothing when no theme provided 1`] = `""`;

@@ -1,8 +1,13 @@
 declare type InputValue = string | number;
 
 declare type Theme = {
-	[key: string]: string | number;
-  data: object
+	[key: string]: unknown;
+}&{
+	data: {
+		global: {
+			body_color: string
+		}
+	};
 };
 
 declare type Countdown = {
