@@ -3,7 +3,14 @@ import { ThemeProvider } from 'styled-components';
 import { Countdown } from './components/countdown';
 import helpers from './helpers';
 
+export enum COUNTDOWN_MODE {
+	NEW,
+	EDIT,
+	IN_PROGRESS,
+};
+
 interface IState {
+	mode: COUNTDOWN_MODE
   theme: Theme | null;
   countdown: Countdown | null;
 }
@@ -11,6 +18,7 @@ interface IState {
 /* TODO: think about the implementation of IProps as { defaultTheme: ITheme } */
 class App extends React.Component<unknown, IState> {
   state: IState = {
+  	mode: COUNTDOWN_MODE.NEW,
   	theme: null,
   	countdown: null,
   }
@@ -27,14 +35,20 @@ class App extends React.Component<unknown, IState> {
 
   render() {
   	const data = this.state.theme && this.state.theme.data;
+  	const { theme, mode, countdown } = this.state;
   	return (
-  		!!this.state.theme && (
+  		!!theme && (
   			<ThemeProvider theme={data}>
   				<h1>Countdown Clock</h1>
   				<img src='koala-logo.png' alt='Company logo' />
-  				{ this.state.countdown
-  					? <div>Seconds left: {this.state.countdown.timeLeft}</div>
-  					: <Countdown setCountdown={this.setTimer} />}
+  				{
+  					!countdown && mode === COUNTDOWN_MODE.IN_PROGRESS
+  						? <div>Starting the countdown...</div>
+  						: <Countdown
+  							mode={mode}
+  							timeLeft={countdown?.timeLeft}
+  							changeMode={this.changeMode} />
+  				}
   			</ThemeProvider>
   		)
   	);
@@ -47,8 +61,8 @@ class App extends React.Component<unknown, IState> {
   				countdown: {
   					id: countdown,
   					start: Date.now(),
-  					duration: time as number,
-  					timeLeft: time as number,
+  					duration: +time,
+  					timeLeft: +time - 1,
   				}
   			})
   			: this.setState({
@@ -58,11 +72,29 @@ class App extends React.Component<unknown, IState> {
   				}});
 
   		if (this.state.countdown?.timeLeft === 0) {
-  			clearInterval(countdown);
-  			this.setState({ countdown: null });
+  			this.changeMode(COUNTDOWN_MODE.NEW);
   		}
   	}, 1000);
   };
+
+	changeMode = (mode: COUNTDOWN_MODE, time?: number): void => {
+		this.setState({mode});
+		switch (mode) {
+			case COUNTDOWN_MODE.IN_PROGRESS:
+				this.setTimer(time as number);
+				break;
+			case COUNTDOWN_MODE.EDIT:
+				const timer_id = this.state.countdown?.id;
+				clearInterval(timer_id);
+				this.setState({countdown: null});
+				break;
+			case COUNTDOWN_MODE.NEW:
+			default:
+				clearInterval(this.state.countdown?.id);
+				this.setState({countdown: null});
+				break;
+		};
+	};
 }
 
 export default App;

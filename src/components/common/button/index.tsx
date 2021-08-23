@@ -1,13 +1,12 @@
 import React from 'react';
 
-interface IButton {
+export interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	label: string;
-	onClick: (e: React.SyntheticEvent) => void;
 };
 
-export const Button = ({ label, onClick }: IButton) => {
+export const Button = ({ label, ...props }: IButton) => {
 	return (
-		<button onClick={() => onClick}>
+		<button {...props}>
 			{label}
 		</button>
 	);

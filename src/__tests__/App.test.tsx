@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
-import App from '../App';
+import App, { COUNTDOWN_MODE } from '../App';
 import helpers from './../helpers';
 
 const defaultTheme: Theme = {
@@ -55,9 +55,22 @@ describe('App component', () => {
 		expect(appWrapper).toMatchSnapshot();
 	});
 
-	it('shows `Seconds left:` if countdown is in progress', () => {
-		instance.setState({countdown: countdown, theme: defaultTheme});
-		expect(appWrapper.contains(<div>Seconds left: 10</div>)).toEqual(true);
+	it('shows `Starting the countdown...` if countdown = null but mode = in progress', () => {
+		instance.setState({
+			countdown: null,
+			theme: defaultTheme,
+			mode: COUNTDOWN_MODE.IN_PROGRESS
+		});
+		expect(appWrapper.contains(<div>Starting the countdown...</div>)).toEqual(true);
+	});
+
+	it('shows `Seconds left:` if countdown is set and in progress', () => {
+		instance.setState({
+			countdown: countdown,
+			theme: defaultTheme,
+			mode: COUNTDOWN_MODE.IN_PROGRESS
+		});
+		expect(appWrapper.find('Countdown').length).toEqual(1);
 	});
 
 	it('sets state.theme on successful fetch in componentDidMount', () => {

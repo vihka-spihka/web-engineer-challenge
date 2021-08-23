@@ -17,10 +17,11 @@ exports[`App component renders correctly when countdown is in progress 1`] = `
     alt="Company logo"
     src="koala-logo.png"
   />
-  <div>
-    Seconds left: 
-    10
-  </div>
+  <Countdown
+    changeMode={[Function]}
+    mode={0}
+    timeLeft={10}
+  />
 </Component>
 `;
 
@@ -42,7 +43,8 @@ exports[`App component renders correctly when theme provided 1`] = `
     src="koala-logo.png"
   />
   <Countdown
-    setCountdown={[Function]}
+    changeMode={[Function]}
+    mode={0}
   />
 </Component>
 `;
