@@ -1,4 +1,4 @@
 import { Input } from './input';
-import { Button } from './button';
+import { StyledButton } from './styles';
 
-export { Input, Button };
+export { Input, StyledButton };

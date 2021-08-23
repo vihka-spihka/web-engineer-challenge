@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyledCountdown } from './styles';
-import { Input, Button } from './../common';
+import { Input, StyledButton } from './../common';
 import { COUNTDOWN_MODE } from './../../App';
 
 interface IProp {
@@ -40,8 +40,15 @@ export const Countdown = ({ mode, timeLeft, changeMode }: IProp) => {
 						label={'Enter time in seconds: '}
 						onChangeInput={val => setValue(val)}
 						placeholder={'e.g. 1000'} />
-					<Button label={'Done'} onClick={(e: React.SyntheticEvent) => submitForm(e)} />
-					<Button label={'Reset'} onClick={() => resetCountdown()} />
+					<StyledButton
+						label={'Done'}
+						$styleType={value !== '' ? 'primary': 'knockout'}
+						disabled={!value}
+						onClick={(e: React.SyntheticEvent) => submitForm(e)} />
+					<StyledButton
+						label={'Reset'}
+						$styleType={'secondary'}
+						onClick={() => resetCountdown()} />
 				</form>
 			);
 			break;
@@ -49,8 +56,14 @@ export const Countdown = ({ mode, timeLeft, changeMode }: IProp) => {
 			countdown = (
 				<>
 					<div>Seconds left: {timeLeft}</div>
-					<Button label={'Edit'} onClick={() => editCountdown()} />
-					<Button label={'Reset'} onClick={() => resetCountdown()} />
+					<StyledButton
+						label={'Edit'}
+						$styleType={'primary'}
+						onClick={() => editCountdown()} />
+					<StyledButton
+						label={'Reset'}
+						$styleType={'secondary'}
+						onClick={() => resetCountdown()} />
 				</>
 			);
 			break;
@@ -64,7 +77,15 @@ export const Countdown = ({ mode, timeLeft, changeMode }: IProp) => {
 						label={'Enter time in seconds: '}
 						onChangeInput={val => setValue(val)}
 						placeholder={'e.g. 1000'} />
-					<Button label={'Start'} onClick={(e: React.SyntheticEvent) => submitForm(e)} />
+					<StyledButton
+						label={'Start'}
+						$styleType={
+							mode === COUNTDOWN_MODE.NEW && value === ''
+								? 'knockout'
+								: 'primary'
+						}
+						disabled={!value}
+						onClick={(e: React.SyntheticEvent) => submitForm(e)} />
 				</form>
 			);
 			break;

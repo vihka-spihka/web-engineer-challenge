@@ -4,7 +4,7 @@ export interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	label: string;
 };
 
-export const Button = ({ label, ...props }: IButton) => {
+export const Button: React.FC<IButton> = ({ label, ...props }) => {
 	return (
 		<button {...props}>
 			{label}
