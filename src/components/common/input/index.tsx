@@ -1,19 +1,22 @@
 import React from 'react';
 
-interface IInput extends Partial<HTMLInputElement> {
+interface IInput extends React.InputHTMLAttributes<HTMLInputElement> {
 	label: string;
-	onChangeInput: (value: InputValue) => void;
+	onChangeInput: (v: InputValue) => void;
 };
 
-export const Input = ({ type, label, value, onChangeInput, placeholder }: IInput) => {
+export const Input: React.FC<IInput> = ({ label, value, onChangeInput, ...props }) => {
 	return (
-		<label>
-			{label}
-			<input
-				type={type}
-				value={value}
-				onChange={(e) => onChangeInput(e.target.value)}
-				placeholder={placeholder} />
-		</label>
+		<>
+			<label>
+				{label}
+				<input
+					value={value}
+					onChange={
+						(e: React.ChangeEvent<HTMLInputElement>) => onChangeInput(e.target.value)
+					}
+					{...props} />
+			</label>
+		</>
 	);
 };
