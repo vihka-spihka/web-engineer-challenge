@@ -1,6 +1,10 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import { StyledApp } from './styles';
 import { Countdown } from './components/countdown';
+import { Loader } from './components/common';
+import { Header } from './components/header';
+import { Footer } from './components/footer';
 import helpers from './helpers';
 
 export enum COUNTDOWN_MODE {
@@ -37,20 +41,23 @@ class App extends React.Component<unknown, IState> {
   	const data = this.state.theme && this.state.theme.data;
   	const { theme, mode, countdown } = this.state;
   	return (
-  		!!theme && (
-  			<ThemeProvider theme={data}>
-  				<h1>Countdown Clock</h1>
-  				<img src='koala-logo.png' alt='Company logo' />
-  				{
-  					!countdown && mode === COUNTDOWN_MODE.IN_PROGRESS
-  						? <div>Starting the countdown...</div>
-  						: <Countdown
-  							mode={mode}
-  							timeLeft={countdown?.timeLeft}
-  							changeMode={this.changeMode} />
-  				}
+  		!theme
+  			? <Loader />
+  			: <ThemeProvider theme={data}>
+  				<StyledApp />
+  				<Header />
+  				<main>
+  					{
+  						!countdown && mode === COUNTDOWN_MODE.IN_PROGRESS
+  							? <Loader />
+  							: <Countdown
+  								mode={mode}
+  								timeLeft={countdown?.timeLeft}
+  								changeMode={this.changeMode} />
+  					}
+  				</main>
+  				<Footer />
   			</ThemeProvider>
-  		)
   	);
   }
 

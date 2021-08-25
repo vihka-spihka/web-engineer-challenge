@@ -1,15 +1,9 @@
 import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import App, { COUNTDOWN_MODE } from '../App';
+import { Loader } from './../components/common';
 import helpers from './../helpers';
-
-const defaultTheme: Theme = {
-	data: {
-		global: {
-			body_color: 'green',
-		},
-	},
-};
+import { defaultTheme } from './../setupTests';
 
 const countdown = {
 	id: 1,
@@ -38,8 +32,8 @@ describe('App component', () => {
 		helpers.fetchData = jest.fn().mockImplementation(mockSuccessfulFetch);
 	});
 
-	it('renders nothing when no theme provided', () => {
-		expect(appWrapper).toEqual({});
+	it('renders Loader when no theme provided', () => {
+		expect(appWrapper.contains(<Loader />)).toEqual(true);
 		expect(appWrapper).toMatchSnapshot();
 	});
 
@@ -55,13 +49,13 @@ describe('App component', () => {
 		expect(appWrapper).toMatchSnapshot();
 	});
 
-	it('shows `Starting the countdown...` if countdown = null but mode = in progress', () => {
+	it('shows Loader if countdown = null but mode = in progress', () => {
 		instance.setState({
 			countdown: null,
 			theme: defaultTheme,
 			mode: COUNTDOWN_MODE.IN_PROGRESS
 		});
-		expect(appWrapper.contains(<div>Starting the countdown...</div>)).toEqual(true);
+		expect(appWrapper.contains(<Loader />)).toEqual(true);
 	});
 
 	it('shows `Seconds left:` if countdown is set and in progress', () => {

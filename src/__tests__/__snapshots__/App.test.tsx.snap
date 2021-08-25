@@ -1,27 +1,63 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`App component renders Loader when no theme provided 1`] = `<Loader />`;
+
 exports[`App component renders correctly when countdown is in progress 1`] = `
 <Component
   theme={
     Object {
+      "buttons": Object {
+        "knockout_button_background_color": "blue",
+        "knockout_button_border_color": "blue",
+        "knockout_button_border_radius": 10,
+        "knockout_button_font_family": "blue",
+        "knockout_button_text_color": "blue",
+        "primary_button_background_color": "blue",
+        "primary_button_border_color": "blue",
+        "primary_button_border_radius": 10,
+        "primary_button_font_family": "blue",
+        "primary_button_text_color": "blue",
+        "secondary_button_background_color": "blue",
+        "secondary_button_border_color": "blue",
+        "secondary_button_border_radius": 10,
+        "secondary_button_font_family": "blue",
+        "secondary_button_text_color": "blue",
+      },
+      "forms": Object {
+        "field_height": 50,
+        "placeholder_color": "black",
+      },
       "global": Object {
+        "background_color": "white",
         "body_color": "green",
+        "loading_bar_color": "red",
+        "primary_border_color": "black",
+      },
+      "header": Object {
+        "background_color": "green",
+        "border_color": "red",
+        "border_radius": 9,
+        "desktop_logo_width": 200,
+        "font_color": "blue",
+        "font_size": 10,
+      },
+      "primary_font_family": Object {
+        "bold": "Font",
+        "regular": "Font",
       },
     }
   }
 >
-  <h1>
-    Countdown Clock
-  </h1>
-  <img
-    alt="Company logo"
-    src="koala-logo.png"
-  />
-  <Countdown
-    changeMode={[Function]}
-    mode={0}
-    timeLeft={10}
-  />
+  <Memo(l) />
+  <Header />
+  <main>
+    <Countdown
+      changeMode={[Function]}
+      mode={0}
+      timeLeft={10}
+    />
+  </main>
+  <Footer />
 </Component>
 `;
 
@@ -29,24 +65,56 @@ exports[`App component renders correctly when theme provided 1`] = `
 <Component
   theme={
     Object {
+      "buttons": Object {
+        "knockout_button_background_color": "blue",
+        "knockout_button_border_color": "blue",
+        "knockout_button_border_radius": 10,
+        "knockout_button_font_family": "blue",
+        "knockout_button_text_color": "blue",
+        "primary_button_background_color": "blue",
+        "primary_button_border_color": "blue",
+        "primary_button_border_radius": 10,
+        "primary_button_font_family": "blue",
+        "primary_button_text_color": "blue",
+        "secondary_button_background_color": "blue",
+        "secondary_button_border_color": "blue",
+        "secondary_button_border_radius": 10,
+        "secondary_button_font_family": "blue",
+        "secondary_button_text_color": "blue",
+      },
+      "forms": Object {
+        "field_height": 50,
+        "placeholder_color": "black",
+      },
       "global": Object {
+        "background_color": "white",
         "body_color": "green",
+        "loading_bar_color": "red",
+        "primary_border_color": "black",
+      },
+      "header": Object {
+        "background_color": "green",
+        "border_color": "red",
+        "border_radius": 9,
+        "desktop_logo_width": 200,
+        "font_color": "blue",
+        "font_size": 10,
+      },
+      "primary_font_family": Object {
+        "bold": "Font",
+        "regular": "Font",
       },
     }
   }
 >
-  <h1>
-    Countdown Clock
-  </h1>
-  <img
-    alt="Company logo"
-    src="koala-logo.png"
-  />
-  <Countdown
-    changeMode={[Function]}
-    mode={0}
-  />
+  <Memo(l) />
+  <Header />
+  <main>
+    <Countdown
+      changeMode={[Function]}
+      mode={0}
+    />
+  </main>
+  <Footer />
 </Component>
 `;
-
-exports[`App component renders nothing when no theme provided 1`] = `""`;

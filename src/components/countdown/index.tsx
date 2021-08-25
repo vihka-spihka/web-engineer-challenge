@@ -56,14 +56,16 @@ export const Countdown = ({ mode, timeLeft, changeMode }: IProp) => {
 			countdown = (
 				<>
 					<div>Seconds left: {timeLeft}</div>
-					<StyledButton
-						label={'Edit'}
-						$styleType={'primary'}
-						onClick={() => editCountdown()} />
-					<StyledButton
-						label={'Reset'}
-						$styleType={'secondary'}
-						onClick={() => resetCountdown()} />
+					<div>
+						<StyledButton
+							label={'Edit'}
+							$styleType={'primary'}
+							onClick={() => editCountdown()} />
+						<StyledButton
+							label={'Reset'}
+							$styleType={'secondary'}
+							onClick={() => resetCountdown()} />
+					</div>
 				</>
 			);
 			break;
