@@ -3,8 +3,9 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
-import Enzyme from 'enzyme';
+import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import { ThemeProvider } from 'styled-components';
 
 export const defaultTheme = {
 	data: {
@@ -49,5 +50,17 @@ export const defaultTheme = {
 		}
 	},
 };
+
+/* see issues:
+	- https://github.com/styled-components/jest-styled-components/issues/119
+	- https://github.com/styled-components/styled-components/issues/1319
+*/
+export function shallowWithTheme(child) {
+	return shallow(child, {
+		wrappingComponent: ({ children }) => {
+			return (<ThemeProvider theme={defaultTheme}>{children}</ThemeProvider>);
+		},
+	});
+}
 
 Enzyme.configure({ adapter: new Adapter() });

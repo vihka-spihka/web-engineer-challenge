@@ -45,11 +45,11 @@ describe('App component', () => {
 
 	it('renders correctly when countdown is in progress', () => {
 		instance.setState({countdown: countdown, theme: defaultTheme});
-		expect(appWrapper).not.toEqual('');
+		expect(appWrapper.contains(<Loader />)).toEqual(false);
 		expect(appWrapper).toMatchSnapshot();
 	});
 
-	it('shows Loader if countdown = null but mode = in progress', () => {
+	it('shows Loader when countdown is about to start', () => {
 		instance.setState({
 			countdown: null,
 			theme: defaultTheme,
@@ -58,7 +58,7 @@ describe('App component', () => {
 		expect(appWrapper.contains(<Loader />)).toEqual(true);
 	});
 
-	it('shows `Seconds left:` if countdown is set and in progress', () => {
+	it('shows `Seconds left:` if countdown is in progress', () => {
 		instance.setState({
 			countdown: countdown,
 			theme: defaultTheme,
@@ -96,6 +96,14 @@ describe('App component', () => {
 			countdown: {
 				duration: 10
 			}
+		});
+	});
+
+	it('sets mode correctly', () => {
+		const modes = [COUNTDOWN_MODE.NEW, COUNTDOWN_MODE.IN_PROGRESS, COUNTDOWN_MODE.EDIT];
+		modes.forEach((it:COUNTDOWN_MODE) => {
+			instance.changeMode(it);
+			expect(appWrapper.state()).toMatchObject({ mode: it });
 		});
 	});
 

@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Countdown renders correctly 1`] = `
+<styled.div>
+  <form
+    onSubmit={[Function]}
+  >
+    <Input
+      label="Enter time in seconds: "
+      onChangeInput={[Function]}
+      placeholder="e.g. 1000"
+      type="number"
+      value=""
+    />
+    <Styled(Button)
+      $styleType="knockout"
+      disabled={true}
+      label="Start"
+      onClick={[Function]}
+    />
+  </form>
+</styled.div>
+`;

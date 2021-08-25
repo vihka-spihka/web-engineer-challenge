@@ -9,8 +9,8 @@ interface IProp {
 	changeMode: (mode: COUNTDOWN_MODE, time?: number) => void;
 };
 
-export const Countdown = ({ mode, timeLeft, changeMode }: IProp) => {
-	const [value, setValue] = useState<InputValue>('');
+export const Countdown: React.FC<IProp> = ({ mode, timeLeft, changeMode }) => {
+	const [value, setValue] = useState<InputValue>(timeLeft! || '');
 
 	const submitForm = (e: React.SyntheticEvent): void => {
 		e.preventDefault();

@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header renders correctly 1`] = `
+<styled.header>
+  <div>
+    ⌛
+  </div>
+  <h1>
+    Countdown Clock
+  </h1>
+</styled.header>
+`;
