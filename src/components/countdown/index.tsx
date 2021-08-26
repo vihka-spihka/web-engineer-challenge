@@ -6,7 +6,7 @@ import { COUNTDOWN_MODE } from './../../App';
 interface IProp {
 	mode: COUNTDOWN_MODE;
 	timeLeft?: number;
-	changeMode: (mode: COUNTDOWN_MODE, time?: number) => void;
+	changeMode: (mode: COUNTDOWN_MODE, time?: number, reset?: boolean) => void;
 };
 
 export const Countdown: React.FC<IProp> = ({ mode, timeLeft, changeMode }) => {
@@ -27,7 +27,7 @@ export const Countdown: React.FC<IProp> = ({ mode, timeLeft, changeMode }) => {
 
 	const resetCountdown = (): void => {
 		setValue('');
-		changeMode(COUNTDOWN_MODE.NEW);
+		changeMode(COUNTDOWN_MODE.NEW, 0, true);
 	};
 
 	let countdown: React.ReactElement;

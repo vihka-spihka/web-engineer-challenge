@@ -47,8 +47,8 @@ declare type Theme = {
 };
 
 declare type Countdown = {
-	id: number;
+	id: number | null;
 	start: number;
 	duration: number;
-	timeLeft: number;
+	timeLeft: number | null;
 };

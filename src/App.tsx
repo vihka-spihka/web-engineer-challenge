@@ -1,10 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { StyledApp } from './styles';
-import { Countdown } from './components/countdown';
-import { Loader } from './components/common';
-import { Header } from './components/header';
-import { Footer } from './components/footer';
+import { Countdown, Loader, Header, Footer, History } from './components';
 import helpers from './helpers';
 
 export enum COUNTDOWN_MODE {
@@ -17,6 +14,7 @@ interface IState {
 	mode: COUNTDOWN_MODE
   theme: Theme | null;
   countdown: Countdown | null;
+	history: Array<Countdown>;
 }
 
 /* TODO: think about the implementation of IProps as { defaultTheme: ITheme } */
@@ -25,6 +23,7 @@ class App extends React.Component<unknown, IState> {
   	mode: COUNTDOWN_MODE.NEW,
   	theme: null,
   	countdown: null,
+  	history: [],
   }
 
   componentDidMount(): void {
@@ -39,7 +38,7 @@ class App extends React.Component<unknown, IState> {
 
   render() {
   	const data = this.state.theme && this.state.theme.data;
-  	const { theme, mode, countdown } = this.state;
+  	const { theme, mode, countdown, history } = this.state;
   	return (
   		!theme
   			? <Loader />
@@ -48,12 +47,15 @@ class App extends React.Component<unknown, IState> {
   				<Header />
   				<main>
   					{
-  						!countdown && mode === COUNTDOWN_MODE.IN_PROGRESS
+  						mode === COUNTDOWN_MODE.IN_PROGRESS && (!countdown || !countdown!.id)
   							? <Loader />
-  							: <Countdown
-  								mode={mode}
-  								timeLeft={countdown?.timeLeft}
-  								changeMode={this.changeMode} />
+  							: <>
+  								<Countdown
+  									mode={mode}
+  									timeLeft={countdown?.timeLeft!}
+  									changeMode={this.changeMode} />
+  								{ history.length > 0 && <History items={history} /> }
+  							</>
   					}
   				</main>
   				<Footer />
@@ -63,42 +65,60 @@ class App extends React.Component<unknown, IState> {
 
   setTimer = (time: InputValue): void => {
   	const countdown = setInterval(() => {
-  		!this.state.countdown
-  			? this.setState({
+  		!this.state.countdown || !this.state.countdown.id
+  			? this.setState(prevState => ({
   				countdown: {
   					id: countdown,
-  					start: Date.now(),
+  					start: prevState.countdown?.start ? prevState.countdown.start : Date.now(),
   					duration: +time,
   					timeLeft: +time - 1,
   				}
-  			})
+  			}))
   			: this.setState({
   				countdown: {
   					...this.state.countdown,
-  					timeLeft: this.state.countdown.timeLeft - 1
+  					timeLeft: this.state.countdown.timeLeft! - 1
   				}});
 
   		if (this.state.countdown?.timeLeft === 0) {
-  			this.changeMode(COUNTDOWN_MODE.NEW);
+  			this.changeMode(COUNTDOWN_MODE.NEW, 0, false);
   		}
   	}, 1000);
   };
 
-	changeMode = (mode: COUNTDOWN_MODE, time?: number): void => {
+	changeMode = (mode: COUNTDOWN_MODE, time?: number, reset?: boolean): void => {
 		this.setState({mode});
 		switch (mode) {
 			case COUNTDOWN_MODE.IN_PROGRESS:
 				this.setTimer(time as number);
 				break;
 			case COUNTDOWN_MODE.EDIT:
-				const timer_id = this.state.countdown?.id;
-				clearInterval(timer_id);
-				this.setState({countdown: null});
+				const timer = this.state.countdown;
+				clearInterval(timer?.id!);
+				this.setState(
+					prevState => (
+						{
+							countdown: {
+								...prevState.countdown!,
+								id: null,
+								timeLeft: null
+							},
+						}
+					)
+				);
 				break;
 			case COUNTDOWN_MODE.NEW:
 			default:
-				clearInterval(this.state.countdown?.id);
-				this.setState({countdown: null});
+				const countdown = this.state.countdown;
+				clearInterval(countdown?.id!);
+				this.setState(prevState => (
+					{
+						countdown: null,
+						history: reset
+							? [...prevState.history] // don't add to history if countdown reseted
+							: [...prevState.history, countdown!]
+					}
+				));
 				break;
 		};
 	};
